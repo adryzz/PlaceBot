@@ -2,7 +2,7 @@ using CommandLine;
 
 namespace PlaceBot;
 
-public class Options
+public class BotOptions
 {
 #pragma warning disable CS8618
     
