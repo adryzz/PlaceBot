@@ -30,7 +30,7 @@ public static class Program
 
         Options = b;
         
-        AllPixels = await Cache.LoadPixelsAsync(Options.TemplatePath);
+        AllPixels = await Cache.LoadPixelsAsync(Options.TemplatePath, Options.RegenerateCaches);
         Pixels = AllPixels;
         
         if (!File.Exists("accounts.json"))

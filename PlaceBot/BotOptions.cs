@@ -13,8 +13,11 @@ public class BotOptions
     [Option('r', "random", HelpText = "Whether or not to randomize pixel placement order", Default = false)]
     public bool RandomizePixelPlacementOrder { get; set; }
     
-    [Option('c', "cooldown", HelpText = "Pixel placement cooldown (seconds)", Default = 305*60)]
+    [Option('c', "cooldown", HelpText = "Pixel placement cooldown (ms)", Default = 305u*60u)]
     public uint PixelCooldown { get; set; }
+    
+    [Option("regenerate-cache", HelpText = "Regenerates caches", Default = false)]
+    public bool RegenerateCaches { get; set; }
     
 #pragma warning restore CS8618
 }

@@ -60,13 +60,13 @@ public static class Cache
 
         image.ProcessPixelRows(accessor =>
         {
-            for (int y = 0; y < accessor.Height; y++)
+            for (ushort y = 0; y < accessor.Height; y++)
             {
                 Span<Rgba32> pixelRow = accessor.GetRowSpan(y);
 
                 // pixelRow.Length has the same value as accessor.Width,
                 // but using pixelRow.Length allows the JIT to optimize away bounds checks:
-                for (int x = 0; x < pixelRow.Length; x++)
+                for (ushort x = 0; x < pixelRow.Length; x++)
                 {
                     // Get a reference to the pixel at position x
                     ref Rgba32 pixel = ref pixelRow[x];
@@ -89,8 +89,14 @@ public static class Cache
         return pixels;
     }
 
-    public static async Task<List<Pixel>> LoadPixelsAsync(string template = "template.png")
+    public static async Task<List<Pixel>> LoadPixelsAsync(string template = "template.png", bool forgeRegenerate = false)
     {
+        if (forgeRegenerate)
+        {
+            Console.WriteLine("Regenerating cache...");
+            return await GenerateCacheAsync(template);
+        }
+        
         if (!File.Exists("cache.bin"))
         {
             Console.WriteLine("No cache found. Generating...");
@@ -121,13 +127,13 @@ public static class Cache
             if (await cache.ReadAsync(buffer) != 9)
                 break;
 
-            pixels.Add(new Pixel(BitConverter.ToInt32(buffer), BitConverter.ToInt32(buffer, 4), buffer[8]));
+            pixels.Add(new Pixel(BitConverter.ToUInt16(buffer), BitConverter.ToUInt16(buffer, 4), buffer[8]));
         }
 
         await cache.DisposeAsync();
         return pixels;
     }
-    
+
     public static byte GetColor(Colors color) => color switch
     {
         Colors.Burgundy => 0,
