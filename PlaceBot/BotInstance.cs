@@ -30,7 +30,7 @@ public class BotInstance
 
             if (Program.Options.RandomizePixelPlacementOrder)
                 index = Random.Shared.Next(0, Program.Pixels.Count);
-
+            
             Pixel p = Program.Pixels[index];
             Program.Pixels.RemoveAt(index);
             return p;

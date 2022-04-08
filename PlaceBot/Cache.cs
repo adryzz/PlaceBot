@@ -9,37 +9,37 @@ public static class Cache
 {
     public enum Colors : uint
     {
-        Burgundy = 0xFF6D001A,
-        DarkRed = 0xFFBE0039,
-        Red = 0xFFFF4500,
-        Orange = 0xFFFFA800,
-        Yellow = 0xFFFFD635,
-        PaleYellow = 0xFFFFF8B8,
-        DarkGreen = 0xFF00A368,
-        Green = 0xFF00CC78,
-        LightGreen = 0xFF7EED56,
-        DarkTeal = 0xFF00756F,
-        Teal = 0xFF009EAA,
-        LightTeal = 0xFF00CCC0,
-        DarkBlue = 0xFF2450A4,
-        Blue = 0xFF3690EA,
-        LightBlue = 0xFF51E9F4,
-        Indigo = 0xFF493AC1,
-        Periwinkle = 0xFF6A5CFF,
-        Lavender = 0xFF94B3FF,
-        DarkPurple = 0xFF811E,
-        Purple = 0xFFB44AC0,
-        PalePurple = 0xFFE4ABFF,
-        Magenta = 0xFFDE107F,
-        Pink = 0xFFFF3881,
-        LightPink = 0xFFFF99AA,
-        DarkBrown = 0xFF6D482F,
-        Brown = 0xFF9C6926,
-        Beige = 0xFFFFB470,
-        Black = 0xFF000000,
-        DarkGray = 0xFF515252,
-        Gray = 0xFF898D90,
-        LightGray = 0xFFD4D7D9,
+        Burgundy = 0x6D001AFF,
+        DarkRed = 0xBE0039FF,
+        Red = 0xFF4500FF,
+        Orange = 0xFFA800FF,
+        Yellow = 0xFFD635FF,
+        PaleYellow = 0xFFF8B8FF,
+        DarkGreen = 0x00A368FF,
+        Green = 0x00CC78FF,
+        LightGreen = 0x7EED56FF,
+        DarkTeal = 0x00756FFF,
+        Teal = 0x009EAAFF,
+        LightTeal = 0x00CCC0FF,
+        DarkBlue = 0x2450A4FF,
+        Blue = 0x3690EAFF,
+        LightBlue = 0x51E9F4FF,
+        Indigo = 0x493AC1FF,
+        Periwinkle = 0x6A5CFFFF,
+        Lavender = 0x94B3FFFF,
+        DarkPurple = 0x811EFF,
+        Purple = 0xB44AC0FF,
+        PalePurple = 0xE4ABFFFF,
+        Magenta = 0xDE107FFF,
+        Pink = 0xFF3881FF,
+        LightPink = 0xFF99AAFF,
+        DarkBrown = 0x6D482FFF,
+        Brown = 0x9C6926FF,
+        Beige = 0xFFB470FF,
+        Black = 0x000000FF,
+        DarkGray = 0x515252FF,
+        Gray = 0x898D90FF,
+        LightGray = 0xD4D7D9FF,
         White = 0xFFFFFFFF
     }
 
@@ -121,13 +121,13 @@ public static class Cache
         //use capacity just because we can and it speeds up
         List<Pixel> pixels = new List<Pixel>((int) ((cache.Length - 20) / 9));
 
-        byte[] buffer = new byte[9];
+        byte[] buffer = new byte[5];
         for (int i = 0; i < pixels.Capacity; i++)
         {
-            if (await cache.ReadAsync(buffer) != 9)
+            if (await cache.ReadAsync(buffer) != 5)
                 break;
 
-            pixels.Add(new Pixel(BitConverter.ToUInt16(buffer), BitConverter.ToUInt16(buffer, 4), buffer[8]));
+            pixels.Add(new Pixel(BitConverter.ToUInt16(buffer), BitConverter.ToUInt16(buffer, 2), buffer[4]));
         }
 
         await cache.DisposeAsync();
