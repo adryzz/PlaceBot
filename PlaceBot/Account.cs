@@ -1,11 +1,14 @@
+using System.Text.Json.Serialization;
+
 namespace PlaceBot;
 
 public class Account
 {
-    public uint Index { get; set; }
+    public int Index { get; set; }
     
     public string AccessToken { get; }
 
+    [JsonIgnore]
     public HttpClient Client { get; }
 
     public Account(string token)
@@ -17,5 +20,10 @@ public class Account
         Client.DefaultRequestHeaders.Add("apollographql-client-name", "mona-lisa");
         Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {AccessToken}");
         Client.DefaultRequestHeaders.Add("Content-Type", "application/json");*/
+    }
+    
+    public Account()
+    {
+
     }
 }

@@ -4,7 +4,7 @@ public class BotInstance
 {
     public Account BotAccount;
     
-    public BotInstance(Account acc, int ms = 305*60)
+    public BotInstance(Account acc, uint ms = 305*60)
     {
         pixelTimer = new Timer(timerCallback, null, 0, ms);
         BotAccount = acc;
@@ -26,10 +26,14 @@ public class BotInstance
     {
         lock (Program.Pixels)
         {
-            if (!Program.Options.RandomizePixelPlacementOrder) 
-                return Program.Pixels.Last();
+            int index = Program.Pixels.Count - 1;
 
-            return Program.Pixels[Random.Shared.Next(0, Program.Pixels.Count)];
+            if (Program.Options.RandomizePixelPlacementOrder)
+                index = Random.Shared.Next(0, Program.Pixels.Count);
+
+            Pixel p = Program.Pixels[index];
+            Program.Pixels.RemoveAt(index);
+            return p;
         }
     }
 }

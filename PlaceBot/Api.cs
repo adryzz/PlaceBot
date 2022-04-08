@@ -11,7 +11,7 @@ public static class Api
     {
         if (p.X > 2000 || p.Y > 2000 || p.Color > 31)
         {
-            Console.WriteLine($"Invalid pixel at account {account.Index}");
+            Console.WriteLine($"[{account.Index}] Invalid pixel.");
             return Task.CompletedTask;
         }
         Console.WriteLine($"[{account.Index}] Pixel placed at ({p.X}, {p.Y}) with color {p.Color} ({Cache.GetColor(p.Color)})");
