@@ -9,38 +9,38 @@ public static class Cache
 {
     public enum Colors : uint
     {
-        Burgundy = 0x6D001AFF,
-        DarkRed = 0xBE0039FF,
-        Red = 0xFF4500FF,
-        Orange = 0xFFA800FF,
-        Yellow = 0xFFD635FF,
-        PaleYellow = 0xFFF8B8FF,
-        DarkGreen = 0x00A368FF,
-        Green = 0x00CC78FF,
-        LightGreen = 0x7EED56FF,
-        DarkTeal = 0x00756FFF,
-        Teal = 0x009EAAFF,
-        LightTeal = 0x00CCC0FF,
-        DarkBlue = 0x2450A4FF,
-        Blue = 0x3690EAFF,
-        LightBlue = 0x51E9F4FF,
-        Indigo = 0x493AC1FF,
-        Periwinkle = 0x6A5CFFFF,
-        Lavender = 0x94B3FFFF,
-        DarkPurple = 0x811EFF,
-        Purple = 0xB44AC0FF,
-        PalePurple = 0xE4ABFFFF,
-        Magenta = 0xDE107FFF,
-        Pink = 0xFF3881FF,
-        LightPink = 0xFF99AAFF,
-        DarkBrown = 0x6D482FFF,
-        Brown = 0x9C6926FF,
-        Beige = 0xFFB470FF,
-        Black = 0x000000FF,
-        DarkGray = 0x515252FF,
-        Gray = 0x898D90FF,
-        LightGray = 0xD4D7D9FF,
-        White = 0xFFFFFFFF
+        Burgundy = 4279894125,
+        DarkRed = 4281925822,
+        Red = 4278207999,
+        Orange = 4278233343,
+        Yellow = 4281718527,
+        PaleYellow = 4290312447,
+        DarkGreen = 4285047552,
+        Green = 4286106624,
+        LightGreen = 4283886974,
+        DarkTeal = 4285494528,
+        Teal = 4289371648,
+        LightTeal = 4290825216,
+        DarkBlue = 4288958500,
+        Blue = 4293562422,
+        LightBlue = 4294240593,
+        Indigo = 4290853449,
+        Periwinkle = 4294925418,
+        Lavender = 4294947732,
+        DarkPurple = 4288618113,
+        Purple = 4290792116,
+        PalePurple = 4294945764,
+        Magenta = 4286517470,
+        Pink = 4286684415,
+        LightPink = 4289370623,
+        DarkBrown = 4281288813,
+        Brown = 4280707484,
+        Beige = 4285576447,
+        Black = 4278190080,
+        DarkGray = 4283585105,
+        Gray = 4287663497,
+        LightGray = 4292466644,
+        White = 4294967295
     }
 
     public static async Task<List<Pixel>> GenerateCacheAsync(string template = "template.png")
@@ -70,6 +70,7 @@ public static class Cache
                 {
                     // Get a reference to the pixel at position x
                     ref Rgba32 pixel = ref pixelRow[x];
+                    
                     if (Enum.IsDefined(typeof(Colors), pixel.PackedValue))
                         pixels.Add(new Pixel(x, y, GetColor((Colors)pixel.PackedValue)));
                 }
