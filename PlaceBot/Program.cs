@@ -31,8 +31,12 @@ public static class Program
         Options = b;
         
         AllPixels = await Cache.LoadPixelsAsync(Options.TemplatePath, Options.RegenerateCaches);
-        Pixels = AllPixels;
+
+        if (Options.VerticalPixelPlacementOrder)
+            AllPixels = AllPixels.OrderBy(x => x.X).ThenBy(y => y.Y).ToList();
         
+        Pixels = AllPixels;
+
         if (!File.Exists("accounts.json"))
         {
             await Console.Error.WriteLineAsync("No accounts found. Make sure you have added all the accounts to 'accounts.json'");

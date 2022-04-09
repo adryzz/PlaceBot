@@ -32,7 +32,7 @@ public class BotInstance
 
             if (Program.Options.RandomizePixelPlacementOrder)
                 index = Random.Shared.Next(0, Program.Pixels.Count);
-            
+
             Pixel p = Program.Pixels[index];
             Program.Pixels.RemoveAt(index);
             return p;
@@ -45,7 +45,7 @@ public class BotInstance
         {
             case 1:
             {
-                Console.WriteLine($"Cooldown: {TimeSpan.FromMilliseconds(BitConverter.ToUInt32(data, 1) * 1000)}");
+                Console.WriteLine($"Cooldown: {TimeSpan.FromSeconds(BitConverter.ToUInt32(data, 1) * 1000)}");
                 break;
             }
         }
