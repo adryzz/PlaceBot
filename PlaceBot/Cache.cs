@@ -82,8 +82,7 @@ public static class Cache
         {
             await cache.WriteAsync(BitConverter.GetBytes(p.X));
             await cache.WriteAsync(BitConverter.GetBytes(p.Y));
-            await cache.WriteAsync(BitConverter.GetBytes(p.Color));
-            cache.Position -= 1;
+            cache.WriteByte(p.Color);
         }
 
         await cache.DisposeAsync();

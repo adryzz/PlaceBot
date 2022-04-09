@@ -26,7 +26,7 @@ public class BotInstance
     {
         lock (Program.Pixels)
         {
-            int index = Program.Pixels.Count - 1;
+            int index = 0;
 
             if (Program.Options.RandomizePixelPlacementOrder)
                 index = Random.Shared.Next(0, Program.Pixels.Count);
