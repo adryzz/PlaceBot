@@ -20,6 +20,8 @@ public class BotInstance
         Pixel p = await getNextPixelAsync();
         //place pixel
         await Api.PlacePixelAsync(BotAccount, p);
+
+        await ReceiveDataAsync(await Api.ReceiveMessageAsync(BotAccount));
     }
     
     private async Task<Pixel> getNextPixelAsync()
@@ -34,6 +36,18 @@ public class BotInstance
             Pixel p = Program.Pixels[index];
             Program.Pixels.RemoveAt(index);
             return p;
+        }
+    }
+
+    private async Task ReceiveDataAsync(byte[] data)
+    {
+        switch (data[0])
+        {
+            case 1:
+            {
+                Console.WriteLine($"Cooldown: {TimeSpan.FromMilliseconds(BitConverter.ToUInt32(data, 1) * 1000)}");
+                break;
+            }
         }
     }
 }

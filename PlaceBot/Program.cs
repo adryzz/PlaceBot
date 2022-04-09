@@ -51,6 +51,7 @@ public static class Program
         
         foreach (var a in Accounts)
         {
+            await a.InitializeAsync();
             Instances.Add(new BotInstance(a, Options.PixelCooldown));
             
             Console.WriteLine($"[{a.Index}] Account started!");

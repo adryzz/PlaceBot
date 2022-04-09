@@ -1,3 +1,4 @@
+using System.Net.WebSockets;
 using System.Text.Json.Serialization;
 
 namespace PlaceBot;
@@ -9,21 +10,21 @@ public class Account
     public string AccessToken { get; }
 
     [JsonIgnore]
-    public HttpClient Client { get; }
+    public ClientWebSocket Client { get; set; }
 
     public Account(string token)
     {
         AccessToken = token;
-        /*Client = new HttpClient();
-        Client.DefaultRequestHeaders.Add("origin", "https://hot-potato.reddit.com");
-        Client.DefaultRequestHeaders.Add("referer", "https://hot-potato.reddit.com/");
-        Client.DefaultRequestHeaders.Add("apollographql-client-name", "mona-lisa");
-        Client.DefaultRequestHeaders.Add("Authorization", $"Bearer {AccessToken}");
-        Client.DefaultRequestHeaders.Add("Content-Type", "application/json");*/
     }
     
     public Account()
     {
 
+    }
+
+    public async Task InitializeAsync()
+    {
+        Client = new ClientWebSocket();
+        await Client.ConnectAsync(new Uri("wss://server.rplace.tk:1291"), CancellationToken.None);
     }
 }

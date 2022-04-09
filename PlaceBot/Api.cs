@@ -1,29 +1,35 @@
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Net.WebSockets;
 using System.Text.Json;
 
 namespace PlaceBot;
 
 public static class Api
 {
-    public static readonly string PlaceUrl = "https://gql-realtime-2.reddit.com/query";
-    public static Task PlacePixelAsync(Account account, Pixel p)
+    public static async Task PlacePixelAsync(Account account, Pixel p)
     {
         if (p.X > 2000 || p.Y > 2000 || p.Color > 31)
         {
             Console.WriteLine($"[{account.Index}] Invalid pixel.");
-            return Task.CompletedTask;
+            return;
         }
+
+        byte[] buffer = new byte[6];
+        buffer[0] = 4;
+        BitConverter.GetBytes(p.X + p.Y * 2000u).Reverse().ToArray().CopyTo(buffer, 1);
+        buffer[5] = p.Color;
+        
+        await account.Client.SendAsync(new ArraySegment<byte>(buffer), WebSocketMessageType.Binary, WebSocketMessageFlags.EndOfMessage, CancellationToken.None);
         Console.WriteLine($"[{account.Index}] Pixel placed at ({p.X}, {p.Y}) with color {p.Color} ({Cache.GetColor(p.Color)})");
         //account.Client.PostAsync(PlaceUrl, new StringContent(String.Format(PixelCall, p.X, p.Y, p.Color, getCanvasId(p)))).WaitAsync(CancellationToken.None);
-        return Task.CompletedTask;
     }
 
-    public static readonly string PixelCall = "";
-
-    private static int getCanvasId(Pixel p)
+    public static async Task<byte[]> ReceiveMessageAsync(Account account)
     {
-        //return (p.X > 1000) + (p.Y > 1000) * 2;
-        return 0;
+        byte[] a = new byte[100];
+        var f = new ArraySegment<byte>(a);
+        var v = await account.Client.ReceiveAsync(f, CancellationToken.None);
+        return a;
     }
 }
