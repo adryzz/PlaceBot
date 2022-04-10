@@ -18,6 +18,16 @@ public class BotInstance
         await Task.Delay(Random.Shared.Next(1000, 5000));
 
         Pixel p = await getNextPixelAsync();
+
+        if (!Program.Options.Force)
+        {
+            while (Program.Board[p.X, p.Y] == p.Color)
+            {
+                Console.WriteLine($"[{BotAccount.Index}] Pixel ({p.X}, {p.Y}) is already {Cache.GetColor(p.Color)}. Skipping...");
+                p = await getNextPixelAsync();
+            }
+        }
+        
         //place pixel
         await Api.PlacePixelAsync(BotAccount, p);
 
@@ -28,6 +38,20 @@ public class BotInstance
     {
         lock (Program.Pixels)
         {
+            if (Program.Pixels.Count == 0)
+            {
+                if (Program.Options.Loop)
+                {
+                    Console.WriteLine("Template done! Restarting...");
+                    Program.Pixels = Program.AllPixels;
+                }
+                else
+                {
+                    Console.WriteLine("There is nothing left to do.");
+                    Environment.Exit(0);
+                }
+            }
+            
             int index = 0;
 
             if (Program.Options.RandomizePixelPlacementOrder)

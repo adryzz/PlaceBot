@@ -19,6 +19,12 @@ public class BotOptions
     [Option('c', "cooldown", HelpText = "Pixel placement cooldown (ms)", Default = 305u*60u)]
     public uint PixelCooldown { get; set; }
     
+    [Option('l', "loop", HelpText = "Restarts the template when done.", Default = false)]
+    public bool Loop { get; set; }
+    
+    [Option('f', "force", HelpText = "Places a pixel even if the pixel already has that color.", Default = false)]
+    public bool Force { get; set; }
+    
     [Option("regenerate-cache", HelpText = "Regenerates caches", Default = false)]
     public bool RegenerateCaches { get; set; }
     

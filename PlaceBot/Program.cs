@@ -9,6 +9,8 @@ public static class Program
     
     public static List<Pixel> Pixels;
 
+    public static byte[,] Board;
+
     public static BotOptions Options;
     
     public static List<BotInstance> Instances = new List<BotInstance>();
@@ -36,6 +38,16 @@ public static class Program
             AllPixels = AllPixels.OrderBy(x => x.X).ThenBy(y => y.Y).ToList();
         
         Pixels = AllPixels;
+        
+        Board = new byte[2000, 2000];
+
+        for (int x = 0; x < 2000; x++)
+        {
+            for (int y = 0; y < 2000; y++)
+            {
+                Board[x, y] = Byte.MaxValue; //set it to an illegal color when starting
+            }
+        }
 
         if (!File.Exists("accounts.json"))
         {
