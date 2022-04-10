@@ -10,10 +10,10 @@ public class BotOptions
     [Option('t', "template", HelpText = "The template to draw on the canvas.", Default = "template.png")]
     public string TemplatePath { get; set; }
     
-    [Option('r', "random", HelpText = "Whether or not to randomize pixel placement order", Default = false, SetName = "order")]
+    [Option('r', "random", HelpText = "Whether or not to randomize pixel placement order", Default = false, SetName = "random")]
     public bool RandomizePixelPlacementOrder { get; set; }
     
-    [Option('v', "vertical", HelpText = "Place pixels in vertical order", Default = false, SetName = "order")]
+    [Option('v', "vertical", HelpText = "Place pixels in vertical order", Default = false, SetName = "vertical")]
     public bool VerticalPixelPlacementOrder { get; set; }
     
     [Option('c', "cooldown", HelpText = "Pixel placement cooldown (ms)", Default = 305u*60u)]

@@ -19,19 +19,26 @@ public static class Program
     
     public static async Task Main(string[] args)
     {
-        Parsed<object> o = (Parsed<object>)Parser.Default.ParseArguments<BotOptions, ConfigOptions>(args);
-        
-        if (o.Value is ConfigOptions c)
+        try
         {
-            await configureAsync(c);
+            Parsed<object> o = (Parsed<object>) Parser.Default.ParseArguments<BotOptions, ConfigOptions>(args);
+
+            if (o.Value is ConfigOptions c)
+            {
+                await configureAsync(c);
+                return;
+            }
+
+            if (o.Value is not BotOptions b)
+                return;
+
+            Options = b;
+        }
+        catch
+        {
             return;
         }
 
-        if (o.Value is not BotOptions b)
-            return;
-
-        Options = b;
-        
         AllPixels = await Cache.LoadPixelsAsync(Options.TemplatePath, Options.RegenerateCaches);
 
         if (Options.VerticalPixelPlacementOrder)
