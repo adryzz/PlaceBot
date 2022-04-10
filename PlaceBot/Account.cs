@@ -25,6 +25,7 @@ public class Account
     public async Task InitializeAsync()
     {
         Client = new ClientWebSocket();
+        return;
         await Client.ConnectAsync(new Uri("wss://server.rplace.tk:443"), CancellationToken.None);
     }
 }
